@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.sun.jna.NativeLibrary;
 
+import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.component.DirectMediaPlayerComponent;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -27,6 +28,8 @@ public class Player
      */
 	public Player(final int width, final int height, VlcDetectionListener vdl)
 	{
+
+		System.out.println("Requested player dimensions: " + width + " x " + height);
 		if(!new NativeDiscovery().discover()) {
 			String path = vdl.getVlcPath();
 			if(path == null) {
@@ -41,7 +44,7 @@ public class Player
 			}
 			NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), path);
 		}
-		
+		System.out.println(LibVlc.INSTANCE.libvlc_get_version());
 		
 		this.listeners = new ArrayList<FrameListener>();
 		BufferFormatCallback bufferFormatCallback = (sourceWidth, sourceHeight) -> {

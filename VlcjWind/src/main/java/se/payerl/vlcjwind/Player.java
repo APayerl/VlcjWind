@@ -28,7 +28,6 @@ public class Player
      */
 	public Player(final int width, final int height, VlcDetectionListener vdl)
 	{
-
 		System.out.println("Requested player dimensions: " + width + " x " + height);
 		if(!new NativeDiscovery().discover()) {
 			String path = vdl.getVlcPath();

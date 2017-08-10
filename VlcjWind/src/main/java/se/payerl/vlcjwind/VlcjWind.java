@@ -129,19 +129,10 @@ public class VlcjWind
     public void updateBufferSize(int width, int height) {
     	boolean wasPlaying = mp.isPlaying();
 		fileMrl = mp.mrl();
+    	currentPlaybackTime = mp.getTime();
 
     	if(wasPlaying) {
-    		mp.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-				@Override
-				public void paused(MediaPlayer mediaPlayer) {
-					mp.removeMediaPlayerEventListener(this);
-					currentPlaybackTime = mp.getTime();
-				}
-    		});
     		mp.pause();
-    	}
-    	else {
-    		currentPlaybackTime = mp.getTime();
     	}
     	
     	mp.release();

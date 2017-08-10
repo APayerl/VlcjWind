@@ -123,16 +123,26 @@ public class VlcjWind
     	}
     }
     
+    private long currentPlaybackTime;
+    private String fileMrl;
+    
     public void updateBufferSize(int width, int height) {
     	boolean wasPlaying = mp.isPlaying();
+
     	if(wasPlaying) {
+    		mp.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+				@Override
+				public void paused(MediaPlayer mediaPlayer) {
+					currentPlaybackTime = mp.getTime();
+					fileMrl = mp.mrl();
+					mp.removeMediaPlayerEventListener(this);
+			    	
+			    	mp.release();
+			    	mediaPlayerComponent.release();
+				}
+    		});
     		mp.pause();
     	}
-    	long currentPlaybackTime = mp.getTime();
-    	String fileMrl = mp.mrl();
-
-    	mp.release();
-    	mediaPlayerComponent.release();
     	
     	BufferFormatCallback bufferFormatCallback = (sourceWidth, sourceHeight) -> {
 			return new RV32BufferFormat(width, height);

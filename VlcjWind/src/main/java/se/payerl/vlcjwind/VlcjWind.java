@@ -102,7 +102,7 @@ public class VlcjWind
 		mp.addMediaPlayerEventListener(new MediaPlayerEventAdapter(){
 			@Override
 			public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-				//updateBufferSize((int)Math.round(mediaPlayer.getVideoDimension().getWidth()), (int)Math.round(mediaPlayer.getVideoDimension().getHeight()));
+				updateBufferSize((int)Math.round(mediaPlayer.getVideoDimension().getWidth()), (int)Math.round(mediaPlayer.getVideoDimension().getHeight()));
 				mp.removeMediaPlayerEventListener(this);
 			}
     	});
@@ -124,6 +124,7 @@ public class VlcjWind
     }
     
     public void updateBufferSize(int width, int height) {
+    	System.out.println(width + "x" + height);
     	boolean wasPlaying = false;
     	if(mp.isPlaying()) {
     		mp.pause();

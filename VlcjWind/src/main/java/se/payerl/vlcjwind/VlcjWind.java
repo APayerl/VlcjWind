@@ -124,13 +124,11 @@ public class VlcjWind
     }
     
     public void updateBufferSize(int width, int height) {
-    	boolean wasPlaying = false;
-    	if(mp.isPlaying()) {
+    	boolean wasPlaying = mp.isPlaying();
+    	if(wasPlaying) {
     		mp.pause();
-    		wasPlaying = true;
     	}
     	long currentPlaybackTime = mp.getTime();
-    	System.out.println("At location: " + currentPlaybackTime);
     	String fileMrl = mp.mrl();
 
     	mp.release();

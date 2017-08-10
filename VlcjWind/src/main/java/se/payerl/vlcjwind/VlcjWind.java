@@ -133,16 +133,16 @@ public class VlcjWind
     		mp.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 				@Override
 				public void paused(MediaPlayer mediaPlayer) {
+					mp.removeMediaPlayerEventListener(this);
 					currentPlaybackTime = mp.getTime();
 					fileMrl = mp.mrl();
-					mp.removeMediaPlayerEventListener(this);
-			    	
-			    	mp.release();
-			    	mediaPlayerComponent.release();
 				}
     		});
     		mp.pause();
     	}
+    	
+    	mp.release();
+    	mediaPlayerComponent.release();
     	
     	BufferFormatCallback bufferFormatCallback = (sourceWidth, sourceHeight) -> {
 			return new RV32BufferFormat(width, height);

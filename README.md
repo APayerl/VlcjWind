@@ -4,6 +4,11 @@ VlcjWind (Wind as in Windowed) is a wrapper library for Vlcj.<br />
 It is used to simplify the need of having multiple video windows at the same time for the same file.<br />
 It is using VLCJ:s DirectMediaPlayer and if I have not missed anything this should be compatible with JavaFx
 
+## Example ##
+
+A example of 
+
+
 ## Gradle ##
 
 How to import the project is listed here:<br />
@@ -57,5 +62,5 @@ https://www.videolan.org/vlc/
 
 ## License ##
 
-VlcjWind is provided under the GPL, version 3 or later.
+VlcjWind is provided under the GPL, version 3 or later.<br/>
 No other licens possible since Vlcj is GPLv3+.

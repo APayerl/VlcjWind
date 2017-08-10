@@ -102,8 +102,9 @@ public class VlcjWind
 		mp.addMediaPlayerEventListener(new MediaPlayerEventAdapter(){
 			@Override
 			public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-				updateBufferSize((int)Math.round(mediaPlayer.getVideoDimension().getWidth()), (int)Math.round(mediaPlayer.getVideoDimension().getHeight()));
-				mp.removeMediaPlayerEventListener(this);
+				//updateBufferSize((int)Math.round(mediaPlayer.getVideoDimension().getWidth()), (int)Math.round(mediaPlayer.getVideoDimension().getHeight()));
+				//mp.removeMediaPlayerEventListener(this);
+				System.out.println("Video output called");
 			}
     	});
 	}

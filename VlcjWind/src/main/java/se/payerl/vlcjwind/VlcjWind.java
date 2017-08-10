@@ -140,6 +140,9 @@ public class VlcjWind
     		});
     		mp.pause();
     	}
+    	else {
+    		currentPlaybackTime = mp.getTime();
+    	}
     	
     	mp.release();
     	mediaPlayerComponent.release();

@@ -25,17 +25,14 @@ import java.util.List;
 
 import com.sun.jna.NativeLibrary;
 
-import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.component.DirectMediaPlayerComponent;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
+import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
 import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
-import uk.co.caprica.vlcj.player.list.MediaListPlayerEventAdapter;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 public class VlcjWind
@@ -43,7 +40,11 @@ public class VlcjWind
     private DirectMediaPlayerComponent mediaPlayerComponent;
     private List<FrameListener> listeners;
     private MediaPlayer mp;
-	private VlcDetectionListener vdl;
+	private static final String OS_ARCH = "os.arch";
+    
+    private long currentPlaybackTime;
+    private String fileMrl;
+    private boolean wasPlaying;
    
     /**
      * Initialize Player object with the max video dimensions to support.
@@ -53,28 +54,28 @@ public class VlcjWind
      */
 	public VlcjWind(final int width, final int height, VlcDetectionListener vdl)
 	{
-		this.vdl = vdl;
-		System.out.println("Requested player dimensions: " + width + " x " + height);
 		if(!new NativeDiscovery().discover()) {
 			String path = vdl.getVlcPath();
 			if(path == null) {
-				if(System.getProperty("os.arch").contains("64")) {
-					throw new RuntimeException("No 64bit VLC library found.");
+				if(System.getProperty(OS_ARCH).contains("64")) {
+					throw new NoVlcLibraryFoundException("No 64bit VLC library found.");
 				}
-				else if(System.getProperty("os.arch").contains("86")) {
-					throw new RuntimeException("No 32bit VLC library found.");
+				else if(System.getProperty(OS_ARCH).contains("86")) {
+					throw new NoVlcLibraryFoundException("No 32bit VLC library found.");
 				} else {
-					throw new RuntimeException("No VLC library found and unable to detect JVM architecture.");
+					throw new NoVlcLibraryFoundException("No VLC library found and unable to detect JVM architecture.");
 				}
 			}
 			NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), path);
 		}
-		System.out.println(LibVlc.INSTANCE.libvlc_get_version());
 		
 		this.listeners = new ArrayList<FrameListener>();
-		BufferFormatCallback bufferFormatCallback = (sourceWidth, sourceHeight) -> {
-			return new RV32BufferFormat(width, height);
-		};		
+		BufferFormatCallback bufferFormatCallback = new BufferFormatCallback() {
+	        @Override
+	        public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
+	            return new RV32BufferFormat(width, height);
+	        }
+	    };	
 		mediaPlayerComponent = new DirectMediaPlayerComponent(bufferFormatCallback)
 		{
 		    @Override
@@ -88,28 +89,28 @@ public class VlcjWind
 	
 	public VlcjWind(VlcDetectionListener vdl)
 	{
-		this.vdl = vdl;
-		System.out.println("Requested player dimensions: " + "1920" + " x " + "1080");
 		if(!new NativeDiscovery().discover()) {
 			String path = vdl.getVlcPath();
 			if(path == null) {
-				if(System.getProperty("os.arch").contains("64")) {
-					throw new RuntimeException("No 64bit VLC library found.");
+				if(System.getProperty(OS_ARCH).contains("64")) {
+					throw new NoVlcLibraryFoundException("No 64bit VLC library found.");
 				}
-				else if(System.getProperty("os.arch").contains("86")) {
-					throw new RuntimeException("No 32bit VLC library found.");
+				else if(System.getProperty(OS_ARCH).contains("86")) {
+					throw new NoVlcLibraryFoundException("No 32bit VLC library found.");
 				} else {
-					throw new RuntimeException("No VLC library found and unable to detect JVM architecture.");
+					throw new NoVlcLibraryFoundException("No VLC library found and unable to detect JVM architecture.");
 				}
 			}
 			NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), path);
 		}
-		System.out.println(LibVlc.INSTANCE.libvlc_get_version());
 		
 		this.listeners = new ArrayList<FrameListener>();
-		BufferFormatCallback bufferFormatCallback = (sourceWidth, sourceHeight) -> {
-			return new RV32BufferFormat(1920, 1080);
-		};		
+		BufferFormatCallback bufferFormatCallback = new BufferFormatCallback() {
+	        @Override
+	        public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
+	            return new RV32BufferFormat(1920, 1080);
+	        }
+	    };	
 		mediaPlayerComponent = new DirectMediaPlayerComponent(bufferFormatCallback)
 		{
 		    @Override
@@ -143,11 +144,8 @@ public class VlcjWind
     	}
     }
     
-    private long currentPlaybackTime;
-    private String fileMrl;
-    
-    public void updateBufferSize(int width, int height) {
-    	boolean wasPlaying = mp.isPlaying();
+    public void updateBufferSize(final int width, final int height) {
+    	wasPlaying = mp.isPlaying();
 		fileMrl = mp.mrl();
     	currentPlaybackTime = mp.getTime();
 
@@ -158,9 +156,12 @@ public class VlcjWind
     	mp.release();
     	mediaPlayerComponent.release();
     	
-    	BufferFormatCallback bufferFormatCallback = (sourceWidth, sourceHeight) -> {
-			return new RV32BufferFormat(width, height);
-		};
+    	BufferFormatCallback bufferFormatCallback = new BufferFormatCallback() {
+            @Override
+            public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
+                return new RV32BufferFormat(width, height);
+            }
+        };
 		mediaPlayerComponent = new DirectMediaPlayerComponent(bufferFormatCallback)
 		{
 		    @Override

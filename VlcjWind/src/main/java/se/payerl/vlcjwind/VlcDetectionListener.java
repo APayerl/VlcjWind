@@ -20,6 +20,7 @@ For contact use email anders{dot}payerl{at}gmail{dot}com
 
 package se.payerl.vlcjwind;
 
+@FunctionalInterface
 public interface VlcDetectionListener {
 	public String getVlcPath();
 }

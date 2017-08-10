@@ -22,6 +22,8 @@ package se.payerl.vlcjwind;
 
 import java.awt.image.BufferedImage;
 
+@FunctionalInterface
 public interface FrameListener
-{	public void newFrameRecieved(BufferedImage image);
+{
+	public void newFrameRecieved(BufferedImage image);
 }

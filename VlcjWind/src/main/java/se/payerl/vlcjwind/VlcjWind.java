@@ -130,6 +130,7 @@ public class VlcjWind
     		wasPlaying = true;
     	}
     	long currentPlaybackTime = mp.getTime();
+    	System.out.println("At location: " + currentPlaybackTime);
     	String fileMrl = mp.mrl();
 
     	mp.release();

@@ -132,6 +132,9 @@ public class VlcjWind
     	long currentPlaybackTime = mp.getTime();
     	String fileMrl = mp.mrl();
 
+    	mp.release();
+    	mediaPlayerComponent.release();
+    	
     	BufferFormatCallback bufferFormatCallback = (sourceWidth, sourceHeight) -> {
 			return new RV32BufferFormat(width, height);
 		};

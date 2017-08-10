@@ -153,7 +153,7 @@ public class VlcjWind
 		mp.prepareMedia(fileMrl);
 		mp.setTime(currentPlaybackTime);
 		if(wasPlaying) {
-			mp.play();
+			//mp.play();
 		}
     }
     

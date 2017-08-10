@@ -14,7 +14,7 @@ import uk.co.caprica.vlcj.player.direct.RenderCallback;
 import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
-public class Player
+public class VlcjWind
 {
     private final DirectMediaPlayerComponent mediaPlayerComponent;
     private List<FrameListener> listeners;
@@ -26,7 +26,7 @@ public class Player
      * @param width max video width to support
      * @param height max video height to support
      */
-	public Player(final int width, final int height, VlcDetectionListener vdl)
+	public VlcjWind(final int width, final int height, VlcDetectionListener vdl)
 	{
 		System.out.println("Requested player dimensions: " + width + " x " + height);
 		if(!new NativeDiscovery().discover()) {

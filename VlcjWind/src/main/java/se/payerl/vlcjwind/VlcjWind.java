@@ -148,11 +148,17 @@ public class VlcjWind
 		mp = mediaPlayerComponent.getMediaPlayer();
 
 		mp.prepareMedia(fileMrl);
+		mp.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+			@Override
+			public void playing(MediaPlayer mediaPlayer) {
+				mp.setTime(currentPlaybackTime);
+				if(!wasPlaying) {
+					mp.pause();
+				}
+				mp.removeMediaPlayerEventListener(this);
+			}
+		});
 		mp.play();
-		mp.setTime(currentPlaybackTime);
-		if(!wasPlaying) {
-			mp.pause();
-		}
     }
     
     public MediaPlayer getMediaPlayer()

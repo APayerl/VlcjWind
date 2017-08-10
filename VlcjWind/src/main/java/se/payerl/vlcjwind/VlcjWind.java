@@ -102,7 +102,6 @@ public class VlcjWind
 		mp.addMediaPlayerEventListener(new MediaPlayerEventAdapter(){
 			@Override
 			public void videoOutput(MediaPlayer mediaPlayer, int newCount) {
-				System.out.println("Video output");
 				updateBufferSize((int)Math.round(mediaPlayer.getVideoDimension().getWidth()), (int)Math.round(mediaPlayer.getVideoDimension().getHeight()));
 				mp.removeMediaPlayerEventListener(this);
 			}
@@ -133,11 +132,9 @@ public class VlcjWind
     	long currentPlaybackTime = mp.getTime();
     	String fileMrl = mp.mrl();
 
-    	System.out.println("Before bufferFormatCallback");
     	BufferFormatCallback bufferFormatCallback = (sourceWidth, sourceHeight) -> {
 			return new RV32BufferFormat(width, height);
 		};
-    	System.out.println("Before creation of DirectMediaPlayerComponent");
 		mediaPlayerComponent = new DirectMediaPlayerComponent(bufferFormatCallback)
 		{
 		    @Override
@@ -146,14 +143,12 @@ public class VlcjWind
 		        return new MyRenderCallback(listeners, width, height);
 		    }
 		};
-    	System.out.println("After creation of DirectMediaPlayerComponent");
 		mp = mediaPlayerComponent.getMediaPlayer();
 
-    	System.out.println("Before file play");
 		mp.prepareMedia(fileMrl);
 		mp.setTime(currentPlaybackTime);
 		if(wasPlaying) {
-			//mp.play();
+			mp.play();
 		}
     }
     

@@ -148,9 +148,10 @@ public class VlcjWind
 		mp = mediaPlayerComponent.getMediaPlayer();
 
 		mp.prepareMedia(fileMrl);
+		mp.play();
 		mp.setTime(currentPlaybackTime);
-		if(wasPlaying) {
-			mp.play();
+		if(!wasPlaying) {
+			mp.pause();
 		}
     }
     

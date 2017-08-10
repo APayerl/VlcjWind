@@ -7,7 +7,7 @@ It is using VLCJ:s DirectMediaPlayer and if I have not missed anything this shou
 ## Example ##
 
 How to use the library:<br/>
-`VlcjWind vw = new VlcjWind(width, height, this);`<br/>
+`VlcjWind vw = new VlcjWind(this);` OR `VlcjWind vw = new VlcjWind(width, height, this);`<br/>
 `vw.registerListener(videoSurface);`<br/>
 `MediaPlayer player = vw.getMediaPlayer();`<br/>
 A example of how to use the library can be found in the demo project https://github.com/APayerl/VlcjWindDemo <br/>

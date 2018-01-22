@@ -52,7 +52,7 @@ Then add the dependency:
 	<dependency>
 	    <groupId>com.github.APayerl</groupId>
 	    <artifactId>VlcjWind</artifactId>
-	    <version>0.1</version>
+	    <version>1.0.0</version>
 	</dependency>
 
 ## Credits ##

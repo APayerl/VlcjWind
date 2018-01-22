@@ -30,7 +30,7 @@ Then add the dependency also to the build.gradle:
 
 	dependencies {
 		...
-		compile 'com.github.APayerl:VlcjWind:0.1'
+		compile 'com.github.APayerl:VlcjWind:1.0.0'
 	}
 
 ## Maven ##

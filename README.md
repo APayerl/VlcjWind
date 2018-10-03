@@ -63,6 +63,9 @@ http://capricasoftware.co.uk/#/projects/vlcj
 For information about VLC check their webpage:<br />
 https://www.videolan.org/vlc/
 
+## CodeScene ##
+[![](https://codescene.io/projects/3423/status.svg) Get more details at **codescene.io**.](https://codescene.io/projects/3423/jobs/latest-successful/results)
+
 ## License ##
 
 VlcjWind is provided under the GPL, version 3 or later.<br/>

@@ -2,7 +2,7 @@
 
 VlcjWind (Wind as in Windowed) is a wrapper library for Vlcj.<br />
 It is used to simplify the need of having multiple video windows at the same time for the same file.<br />
-It is using VLCJ:s DirectMediaPlayer and if I have not missed anything this should be compatible with JavaFx
+It is using VLCJ:s DirectMediaPlayer and should be compatible with JavaFx
 
 ## Example ##
 
